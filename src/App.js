@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+//* сборка основного компонента
 
-function App() {
+import paintings from './paintings.json'; // коллекция эл-ов
+import PaintingList from './components/PaintingList'; // передача пропсов с коллекции в компонент
+import Section from './components/Section';
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      {/* в секцию передаем заголовок и коллекцию компонентов */}
+      <Section title="Топ недели">
+        <PaintingList items={paintings} />
+      </Section>
+
+      {/* в секцию передаем заголовок  */}
+      <Section title="Лучшее"></Section>
     </div>
   );
 }
-
-export default App;
