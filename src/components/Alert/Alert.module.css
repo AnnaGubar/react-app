@@ -5,6 +5,8 @@
   color: #fff;
 }
 
+/* composes: alert - дополнение стиля .alert */
+
 .error {
   composes: alert;
   background-color: red;

@@ -8,6 +8,9 @@ function Alert({ text, type }) {
     </p>
   );
 }
+
+// если заранее не знаем значение - s[type] - выюирает из массива ['success', 'warning', 'error']
+
 Alert.propTypes = {
   text: PropTypes.string.isRequired,
   type: PropTypes.oneOf(['success', 'warning', 'error']).isRequired,
