@@ -9,5 +9,3 @@
 //   </React.StrictMode>,
 //   document.getElementById('root')
 // );
-
-console.log(5)
