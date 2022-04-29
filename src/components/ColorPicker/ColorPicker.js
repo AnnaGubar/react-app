@@ -27,7 +27,7 @@ class ColorPicker extends Component {
   render() {
     const { activeOptionIdx } = this.state;
     const { options } = this.props; // массив обьектов colorPickerOptions
-    const { label } = options[activeOptionIdx];
+    const { label } = options[activeOptionIdx]; // цвет активного индекса
 
     return (
       <div className="ColorPicker">
