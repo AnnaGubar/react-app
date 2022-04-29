@@ -46,6 +46,7 @@ class App extends Component {
         <div class="fff">
           <p>Общее кол-во: {totalTodoCount}</p>
           <p>Кол-во выполненных: {completedTodoCount}</p>
+
           {/* 👉🏻 todos={todos} - изначальная отрисовка */}
           {/* 👉🏻 onDeleteTodo={this.deleteTodo} - обработка state */}
           <TodoList todos={todos} onDeleteTodo={this.deleteTodo} />
