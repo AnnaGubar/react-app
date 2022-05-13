@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import './ColorPicker.css';
 
 class ColorPicker extends Component {
@@ -12,17 +13,27 @@ class ColorPicker extends Component {
   };
 
   // присваивает класс к activeOptionIdx
+
+  // как работает? : 'ColorPicker__option' - класс по умолчанию,
+  // дальше передаем динамический класс в виде обьекта - добавление по условию
+
   makeOptionClassName = index => {
-    const optionClasses = ['ColorPicker__option'];
-
-    // console.log(this.state.activeOptionIdx); // текущий идекс activeOptionIdx
-
-    if (index === this.state.activeOptionIdx) {
-      optionClasses.push('ColorPicker__option--active');
-    }
-
-    return optionClasses.join(' ');
+    return classNames('ColorPicker__option', {
+      'ColorPicker__option--active': index === this.state.activeOptionIdx,
+    });
   };
+
+  // 🔼🔼🔼 аналог без classnames
+
+  // makeOptionClassName = index => {
+  //   const optionClasses = ['ColorPicker__option'];
+
+  //   if (index === this.state.activeOptionIdx) {
+  //     optionClasses.push('ColorPicker__option--active');
+  //   }
+
+  //   return optionClasses.join(' ');
+  // };
 
   render() {
     const { activeOptionIdx } = this.state;

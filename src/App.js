@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Counter from './components/Counter';
-import Dropdown from './components/Dropdown';
+import Container from './components/Container';
 import ColorPicker from './components/ColorPicker';
 import TodoList from './components/TodoList';
 import initialTodos from './todos.json';
@@ -36,11 +35,9 @@ class App extends Component {
     );
 
     return (
-      <>
+      <Container>
         <h1>Состояние компонента</h1>
 
-        <Counter initialValue={10} />
-        <Dropdown />
         <ColorPicker options={colorPickerOptions} />
 
         <div class="fff">
@@ -51,7 +48,7 @@ class App extends Component {
           {/* 👉🏻 onDeleteTodo={this.deleteTodo} - обработка state */}
           <TodoList todos={todos} onDeleteTodo={this.deleteTodo} />
         </div>
-      </>
+      </Container>
     );
   }
 }
