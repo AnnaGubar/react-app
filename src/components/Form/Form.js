@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
+import './Form.css';
 
 class Form extends Component {
   state = {
@@ -38,7 +39,7 @@ class Form extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={this.handleSubmit} className="Form">
         <label htmlFor={this.nameInputId}>
           Имя
           <input

@@ -5,7 +5,7 @@ import ColorPicker from './components/ColorPicker';
 import TodoList from './components/TodoList';
 import TodoEditor from './components/TodoEditor';
 import Filter from './components/Filter';
-// import Form from './components/Form';
+import Form from './components/Form/Form';
 import initialTodos from './todos.json';
 
 class App extends Component {
@@ -83,7 +83,7 @@ class App extends Component {
 
     return (
       <Container>
-        <ColorPicker options={colorPickerOptions}/>
+        <ColorPicker options={colorPickerOptions} />
         {/* TODO: вынести в отдельный компонент */}
 
         <div>
@@ -100,6 +100,8 @@ class App extends Component {
           onDeleteTodo={this.deleteTodo}
           onToggleCompleted={this.toggleCompleted}
         />
+
+        <Form />
       </Container>
     );
   }
