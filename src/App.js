@@ -1,29 +1,72 @@
 import React, { Component } from 'react';
 import shortid from 'shortid';
+
 import Container from './components/Container';
-import ColorPicker from './components/ColorPicker';
 import TodoList from './components/TodoList';
 import TodoEditor from './components/TodoEditor';
 import Filter from './components/Filter';
-import Form from './components/Form/Form';
 import initialTodos from './todos.json';
+import Modal from './components/Modal';
+import IconButton from './components/IconButton';
+import { ReactComponent as AddIcon } from './icons/add.svg';
+
+//* пример избежания утечки памяти
+// import Clock from './components/Clock';
+
+//* метод shouldComponentUpdate, PureComponent
+// import Tabs from './components/Tabs';
+// import tabs from './tabs.json';
 
 class App extends Component {
   state = {
     todos: initialTodos,
     filter: '',
+    showModal: false,
   };
+
+  // позволяет получить доступ к сохраненному
+  componentDidMount() {
+    console.log('App componentDidMount');
+
+    const todos = localStorage.getItem('todos');
+    const parsedTodos = JSON.parse(todos);
+
+    if (parsedTodos) {
+      this.setState({ todos: parsedTodos });
+    }
+  }
+
+  // отслеживает изменения при render
+  componentDidUpdate(prevProps, prevState) {
+    console.log('App componentDidUpdate');
+
+    const nextTodos = this.state.todos;
+    const prevTodos = prevState.todos;
+
+    if (nextTodos !== prevTodos) {
+      console.log('Обновилось поле todos, записываю todos в хранилище');
+      localStorage.setItem('todos', JSON.stringify(nextTodos));
+    }
+
+    // закрытие модалки после добавления новой todo
+    if (nextTodos.length > prevTodos.length && prevTodos.length !== 0) {
+      this.toggleModal();
+    }
+  }
 
   addTodo = text => {
     const todo = {
       id: shortid.generate(),
       text,
-      completed: false,
+      completed: true,
     };
 
     this.setState(({ todos }) => ({
       todos: [todo, ...todos],
     }));
+
+    // аналог проверке на длину массива в методе componentDidUpdate
+    // this.toggleModal();
   };
 
   deleteTodo = todoId => {
@@ -33,8 +76,9 @@ class App extends Component {
   };
 
   toggleCompleted = todoId => {
+    // * запись через условие
     // this.setState(prevState => ({
-    //   todos: prevState.todos.map(todo => {
+    // todos: prevState.todos.map(todo => {
     //     if (todo.id === todoId) {
     //       return {
     //         ...todo,
@@ -46,6 +90,7 @@ class App extends Component {
     //   }),
     // }));
 
+    // * аналог записи через тернарник
     this.setState(({ todos }) => ({
       todos: todos.map(todo =>
         todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
@@ -75,23 +120,37 @@ class App extends Component {
     );
   };
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
   render() {
-    const { todos, filter } = this.state;
+    const { todos, filter, showModal } = this.state;
     const totalTodoCount = todos.length;
     const completedTodoCount = this.calculateCompletedTodos();
     const visibleTodos = this.getVisibleTodos();
 
     return (
       <Container>
-        <ColorPicker options={colorPickerOptions} />
-        {/* TODO: вынести в отдельный компонент */}
+        {/* <Clock /> */}
+        {/* <Tabs items={tabs} /> */}
+
+        <IconButton onClick={this.toggleModal} aria-label="Добавить todo">
+          <AddIcon width="40" height="40" fill="#fff" />
+        </IconButton>
+
+        {showModal && (
+          <Modal onClose={this.toggleModal}>
+            <TodoEditor onSubmit={this.addTodo} />
+          </Modal>
+        )}
 
         <div>
           <p>Всего заметок: {totalTodoCount}</p>
           <p>Выполнено: {completedTodoCount}</p>
         </div>
-
-        <TodoEditor onSubmit={this.addTodo} />
 
         <Filter value={filter} onChange={this.changeFilter} />
 
@@ -101,19 +160,9 @@ class App extends Component {
           onToggleCompleted={this.toggleCompleted}
         />
 
-        <Form />
       </Container>
     );
   }
 }
 
 export default App;
-
-let colorPickerOptions = [
-  { label: 'red', color: '#F44336' },
-  { label: 'green', color: '#4CAF50' },
-  { label: 'blue', color: '#2196F3' },
-  { label: 'grey', color: '#607D8B' },
-  { label: 'pink', color: '#E91E63' },
-  { label: 'indigo', color: '#3F51B5' },
-];
