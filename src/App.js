@@ -1,25 +1,40 @@
-import { Component } from 'react';
-import { ToastContainer } from 'react-toastify'; // библиотека оповещений
-import PokemonForm from './components/PokemonForm';
-import PokemonInfo from './components/PokemonInfo';
+import { Switch, Route } from 'react-router-dom';
+import AppBar from './components/AppBar/AppBar';
+import SkipEffectOnFirstRender from './components/SkipEffectOnFirstRender';
+import Counter from './components/Counter/Counter';
+import PokemonView from './views/PokemonView';
+import Friends from './components/Friends';
 
-export default class App extends Component {
-  state = {
-    pokemonName: '',
-  };
+const containerStyles = {
+  maxWidth: 1170,
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  paddingLeft: 15,
+  paddingRight: 15,
+};
 
-  // принимает дочерний state и записывает в свой
-  handleFormSubmit = pokemonName => {
-    this.setState({ pokemonName });
-  };
+export default function App() {
+  return (
+    <div style={containerStyles}>
+      <AppBar />
 
-  render() {
-    return (
-      <div style={{ maxWidth: 1170, margin: '0 auto', padding: 20 }}>
-        <PokemonForm onSubmit={this.handleFormSubmit} />
-        <PokemonInfo pokemonName={this.state.pokemonName} />
-        <ToastContainer autoClose={3000} />
-      </div>
-    );
-  }
+      <Switch>
+        <Route path="/skip-first-render">
+          <SkipEffectOnFirstRender />
+        </Route>
+
+        <Route path="/pokemon">
+          <PokemonView />
+        </Route>
+
+        <Route path="/counter">
+          <Counter />
+        </Route>
+
+        <Route path="/notes">
+          <Friends />
+        </Route>
+      </Switch>
+    </div>
+  );
 }
