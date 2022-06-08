@@ -1,35 +1,31 @@
-## Начало работы с react
+# ХУКИ
 
-- npx create-react-app .
-- npm i prop-types
+`npm install react-router-dom@5` - для работы со Switch
 
-## Настройка линтеров
+- [Документация](https://ru.reactjs.org/docs/hooks-intro.html)
+- _useState_ - не отталкиваясь от предыдущего (просто перезаписать значение)
+  - SignupForm
+    - Одно значение = один useState
+  - ColorPicker
+- _useEffect_ - массив зависимостей
+  - Counter - отталкиваясь от предыдущего prevState
+    - Каждый рендер
+    - Каждый рендер при изменении какого-то стейта или пропса
+  - SignUpForm
+    - localStorage
+    - _lazy state initialization_ - вызывается при первом рендере и больше
+      никогда
+    - Кастомный хук _useLocalStorage_
+- useRef
+  - Clock
+    - Первый рендер
+    - Последний рендер
+- useContext
+  - UserMenu
+- Покемоны
 
-- npm install --save-dev prettier husky lint-staged
-- добавить 2 файла
+## Библиотеки
 
-  - .huskyrc `{ "hooks": { "pre-commit": "lint-staged" } }`
-  - .lintstagedrc
-    `{ "src/**/*.{json,css,scss,md}": ["prettier --write"], "src/**/*.{js,jsx,ts,tsx}": ["prettier --write", "eslint --fix"] }`
-
-         <!-- - npm install --save-dev prettier eslint -->
-         <!-- - npx mrm@2 lint-staged (добавили в package.json scss jdx) -->
-
-## Деплой на GitHub Pages
-
-`https://drive.google.com/file/d/1EOewQyS7V9SHsUbbycwgTNqB59jwhFnG/view`
-
-- npm run build
-- добавляем строку `"homepage": "https://myusername.github.io/my-app",` в
-  package.json
-- npm run build
-- npm install --save gh-pages
-- добавляем в package.json
-  `"predeploy": "npm run build","deploy": "gh-pages -d build"`
-- npm run deploy
-
-## Normalize
-
-- npm install modern-normalize
-- в файле index.js сделать импорт
-  `import 'modern-normalize/modern-normalize.css';`
+- [React Hook Form](https://react-hook-form.com/)
+- [Хуки для HTTP-запросов](https://github.com/tannerlinsley/react-query)
+- [Кастомные хуки](https://github.com/streamich/react-use)
