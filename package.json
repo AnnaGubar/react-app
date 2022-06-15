@@ -21,6 +21,7 @@
     "react-toastify": "^9.0.1",
     "sass-loader": "^12.6.0",
     "shortid": "^2.2.16",
+    "slugify": "^1.6.5",
     "web-vitals": "^2.1.4",
     "yup": "^0.32.11"
   },
